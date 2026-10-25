@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sri Maneeshwara Super Market | Online Grocery Delivery</title>
+  <meta name="description" content="Online grocery supermarket delivering fresh groceries across Annur, Kumarankundru, Pogalur, and Kovilpalayam in Coimbatore district.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
+    .font-tamil { font-family: 'Noto Sans Tamil', sans-serif; }
+    @media print {
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+    }
+  </style>
+</head>
+<body class="bg-stone-50 text-stone-900 selection:bg-emerald-100 selection:text-emerald-900 antialiased min-h-screen flex flex-col">
+
+  <!-- ========================================================================= -->
+  <!-- SHOP OWNER CONFIGURATION SECTION (EDIT STORE DETAILS, RATES & UPI HERE)   -->
+  <!-- ========================================================================= -->
+  <script>
+    /**
+     * SHOP OWNER EDITABLE CONFIGURATION:
+     * Easily modify your store name, phone numbers, UPI ID, delivery charges,
+     * estimated delivery times, and free gift milestone below.
+     */
+    const STORE_CONFIG = {
+      storeName: "Sri Maneeshwara Super Market",
+      storeNameTamil: "ஸ்ரீ மனீஷ்வரா சூப்பர் மார்க்கெட்",
+      tagline: "Freshness & Quality Delivered to Your Doorstep",
+      phone: "+91 94432 18920",
+      whatsappNumber: "919443218920", // 10-12 digits without + or dashes for WhatsApp link
+      upiId: "srimaneeshwara@okaxis",  // Shop owner's UPI ID for GPay / PhonePe / Paytm
+      address: "No. 42/1, Sathy Main Road, Near Bus Stand, Opp. Union Office, Annur, Coimbatore - 641653",
+      openingHours: "Open All 7 Days: 6:30 AM – 10:00 PM",
+
+      // Free delivery threshold in Indian Rupees (₹)
+      freeDeliveryThreshold: 500,
+
+      // Free gift milestone in Indian Rupees (₹)
+      freeGiftThreshold: 2000,
+
+      // DELIVERY AREAS & CHARGES CONFIGURATION:
+      // Edit delivery charges, delivery times, and permitted pincodes here:
+      deliveryAreas: {
+        annur: {
+          id: "annur",
+          name: "Annur",
+          tamilName: "அன்னூர்",
+          deliveryCharge: 20, // in Rupees (₹)
+          estimatedTime: "30-45 min",
+          pincodes: ["641653"]
+        },
+        kumarankundru: {
+          id: "kumarankundru",
+          name: "Kumarankundru",
+          tamilName: "குமரன்குன்று",
+          deliveryCharge: 30, // in Rupees (₹)
+          estimatedTime: "45-60 min",
+          pincodes: ["641653", "641107"]
+        },
+        pogalur: {
+          id: "pogalur",
+          name: "Pogalur",
+          tamilName: "பொகலூர்",
+          deliveryCharge: 40, // in Rupees (₹)
+          estimatedTime: "45-60 min",
+          pincodes: ["641653", "641697"]
+        },
+        kovilpalayam: {
+          id: "kovilpalayam",
+          name: "Kovilpalayam",
+          tamilName: "கோவில்பாளையம்",
+          deliveryCharge: 30, // in Rupees (₹)
+          estimatedTime: "45-60 min",
+          pincodes: ["641107", "641110"]
+        }
+      },
+
+      // Free Gift options unlocked when cart total >= ₹2000:
+      freeGiftOptions: [
+        { id: "sugar", name: "1 kg Premium Crystal Sugar Pack", tamilName: "1 கிலோ சர்க்கரை பாக்கெட்" },
+        { id: "oil", name: "500 ml Refined Sunflower Cooking Oil", tamilName: "500 மி.லி சமையல் எண்ணெய்" },
+        { id: "steel", name: "Stainless Steel Food Container (Set of 2)", tamilName: "துருப்பிடிக்காத எஃகு டப்பா செட்" },
+        { id: "bag", name: "Eco-Friendly Cotton Canvas Shopping Bag", tamilName: "மஞ்சப்பை & கைப்பை" }
+      ]
+    };
+  </script>
+
+  <!-- Notice Bar -->
+  <div class="bg-emerald-800 text-emerald-100 text-xs py-2 px-4 font-medium text-center no-print">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <span>📍 Annur · Kumarankundru · Pogalur · Kovilpalayam</span>
+      <span>🎉 Free Delivery above ₹500 · Free Gift above ₹2000!</span>
+      <span>⏰ Open 6:30 AM – 10:00 PM | Call: <a href="tel:+919443218920" class="underline font-bold">+91 94432 18920</a></span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="bg-white/95 backdrop-blur-md border-b border-stone-200 sticky top-0 z-40 shadow-xs no-print">
+    <div class="max-w-7xl mx-auto px-4 py-3.5 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-700 text-white font-extrabold text-xl flex items-center justify-center">
+          M
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-stone-900 leading-tight">Sri Maneeshwara Super Market</h1>
+          <p class="text-xs text-emerald-700 font-medium font-tamil">ஸ்ரீ மனீஷ்வரா சூப்பர் மார்க்கெட்</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 text-xs">
+        <button id="loc-btn" onclick="openLocationModal()" class="px-3 py-1.5 rounded-lg border border-stone-200 bg-stone-50 hover:bg-emerald-50 text-stone-700 font-semibold flex items-center gap-1.5">
+          📍 <span id="loc-display">Select Delivery Area</span>
+        </button>
+        <button onclick="toggleCart()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold flex items-center gap-2 shadow-xs">
+          🛒 <span>Cart (<span id="cart-count">0</span>)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Hero & Products -->
+  <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full space-y-8 no-print">
+    <!-- Hero Banner -->
+    <div class="bg-gradient-to-r from-emerald-900 to-emerald-800 text-white rounded-3xl p-6 sm:p-10 shadow-lg relative overflow-hidden">
+      <div class="max-w-xl space-y-3">
+        <span class="px-3 py-1 rounded-full bg-white/10 text-emerald-200 text-xs font-semibold">Annur Regional Grocery Hub</span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold leading-tight">Fresh Daily Groceries, Delivered to Your Doorstep.</h2>
+        <p class="text-xs sm:text-sm text-emerald-100 leading-relaxed">
+          Serving Annur, Kumarankundru, Pogalur, and Kovilpalayam with 100% genuine staples, Aavin milk, and regional spices.
+        </p>
+        <div class="pt-2 flex gap-3 text-xs">
+          <span class="bg-emerald-700/80 px-3 py-1.5 rounded-lg">✓ Free Delivery &gt; ₹500</span>
+          <span class="bg-amber-500/80 px-3 py-1.5 rounded-lg text-amber-950 font-bold">🎁 Free Gift &gt; ₹2000</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="flex items-center gap-2 overflow-x-auto pb-2 text-xs font-semibold" id="category-pills">
+      <!-- Injected by script -->
+    </div>
+
+    <!-- Product Grid -->
+    <div>
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-stone-900">Grocery Staples &amp; Essentials</h3>
+        <span class="text-xs text-stone-500" id="product-count">Loading products...</span>
+      </div>
+      <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <!-- Injected by script -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Location Modal -->
+  <div id="location-modal" class="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden no-print">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4">
+      <div class="flex justify-between items-center border-b pb-3">
+        <h3 class="font-bold text-lg text-stone-900">Choose Your Locality</h3>
+        <button onclick="closeLocationModal()" class="text-stone-400 hover:text-stone-700">✕</button>
+      </div>
+      <p class="text-xs text-stone-600">We deliver exclusively to 4 regions in Coimbatore district:</p>
+      
+      <div class="space-y-2">
+        <button onclick="setArea('annur')" class="w-full p-3 rounded-xl border border-stone-200 text-left hover:border-emerald-600 hover:bg-emerald-50/60 flex justify-between items-center">
+          <div>
+            <span class="font-bold text-sm block">Annur (அன்னூர்)</span>
+            <span class="text-xs text-stone-500">Pincode: 641653</span>
+          </div>
+          <span class="text-xs font-bold text-emerald-800">₹20 (30-45m)</span>
+        </button>
+        <button onclick="setArea('kumarankundru')" class="w-full p-3 rounded-xl border border-stone-200 text-left hover:border-emerald-600 hover:bg-emerald-50/60 flex justify-between items-center">
+          <div>
+            <span class="font-bold text-sm block">Kumarankundru (குமரன்குன்று)</span>
+            <span class="text-xs text-stone-500">Pincode: 641653, 641107</span>
+          </div>
+          <span class="text-xs font-bold text-emerald-800">₹30 (45-60m)</span>
+        </button>
+        <button onclick="setArea('pogalur')" class="w-full p-3 rounded-xl border border-stone-200 text-left hover:border-emerald-600 hover:bg-emerald-50/60 flex justify-between items-center">
+          <div>
+            <span class="font-bold text-sm block">Pogalur (பொகலூர்)</span>
+            <span class="text-xs text-stone-500">Pincode: 641653, 641697</span>
+          </div>
+          <span class="text-xs font-bold text-emerald-800">₹40 (45-60m)</span>
+        </button>
+        <button onclick="setArea('kovilpalayam')" class="w-full p-3 rounded-xl border border-stone-200 text-left hover:border-emerald-600 hover:bg-emerald-50/60 flex justify-between items-center">
+          <div>
+            <span class="font-bold text-sm block">Kovilpalayam (கோவில்பாளையம்)</span>
+            <span class="text-xs text-stone-500">Pincode: 641107, 641110</span>
+          </div>
+          <span class="text-xs font-bold text-emerald-800">₹30 (45-60m)</span>
+        </button>
+      </div>
+
+      <div class="pt-2 text-[11px] text-stone-400">
+        Free delivery on orders over ₹500 in all areas.
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Drawer -->
+  <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden no-print">
+    <div class="absolute inset-0 bg-stone-900/60" onclick="toggleCart()"></div>
+    <div class="absolute inset-y-0 right-0 max-w-md w-full bg-white shadow-2xl flex flex-col">
+      <div class="p-4 border-b flex justify-between items-center bg-stone-50">
+        <h3 class="font-bold text-base text-stone-900">Your Grocery Cart</h3>
+        <button onclick="toggleCart()" class="text-stone-400 hover:text-stone-700">✕</button>
+      </div>
+
+      <div id="cart-items" class="flex-1 p-4 overflow-y-auto space-y-3">
+        <!-- Injected by script -->
+      </div>
+
+      <div class="p-4 border-t bg-stone-50 space-y-2 text-xs">
+        <div class="flex justify-between"><span>Subtotal:</span><span id="cart-subtotal" class="font-bold">₹0</span></div>
+        <div class="flex justify-between"><span>Delivery:</span><span id="cart-delivery" class="font-bold">₹0</span></div>
+        <div id="cart-gift-row" class="flex justify-between text-amber-800 font-bold hidden">
+          <span>🎁 Free Gift Unlocked:</span><span id="cart-gift-name">1 kg Sugar Pack</span>
+        </div>
+        <div class="flex justify-between text-base font-extrabold text-stone-900 pt-2 border-t">
+          <span>Total:</span><span id="cart-grandtotal">₹0</span>
+        </div>
+        <button onclick="openCheckout()" class="w-full py-3 rounded-xl bg-emerald-600 text-white font-bold text-sm hover:bg-emerald-700 transition-colors mt-2">
+          Proceed to Checkout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div id="checkout-modal" class="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto hidden no-print">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 space-y-4 my-8">
+      <div class="flex justify-between items-center border-b pb-3">
+        <h3 class="font-bold text-lg text-stone-900">Checkout Delivery</h3>
+        <button onclick="closeCheckout()" class="text-stone-400 hover:text-stone-700">✕</button>
+      </div>
+
+      <form onsubmit="placeOrder(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold mb-1">Full Name *</label>
+          <input type="text" id="cust-name" required placeholder="e.g. Ramesh" class="w-full p-2 border rounded-lg">
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Phone Number (10 digits) *</label>
+          <input type="tel" id="cust-phone" pattern="[6-9][0-9]{9}" required placeholder="e.g. 9876543210" class="w-full p-2 border rounded-lg font-mono">
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-semibold mb-1">Area *</label>
+            <select id="cust-area" class="w-full p-2 border rounded-lg font-semibold">
+              <option value="annur">Annur</option>
+              <option value="kumarankundru">Kumarankundru</option>
+              <option value="pogalur">Pogalur</option>
+              <option value="kovilpalayam">Kovilpalayam</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Pincode (6 digits) *</label>
+            <input type="text" id="cust-pincode" pattern="[0-9]{6}" required placeholder="641653" class="w-full p-2 border rounded-lg font-mono">
+          </div>
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Street &amp; Door No *</label>
+          <input type="text" id="cust-address" required placeholder="House No, Street, Landmark" class="w-full p-2 border rounded-lg">
+        </div>
+
+        <div class="pt-2 border-t">
+          <label class="block font-semibold mb-1">Choose Payment Method *</label>
+          <div class="grid grid-cols-2 gap-2 pt-1 mb-2">
+            <label class="flex items-center gap-1.5 p-2 border rounded-lg cursor-pointer bg-emerald-50/50">
+              <input type="radio" name="pay-method" value="netbanking" checked onchange="togglePaymentFields()">
+              <span class="font-bold">🏦 Net Banking</span>
+            </label>
+            <label class="flex items-center gap-1.5 p-2 border rounded-lg cursor-pointer">
+              <input type="radio" name="pay-method" value="upi" onchange="togglePaymentFields()">
+              <span class="font-bold">📱 UPI / QR</span>
+            </label>
+            <label class="flex items-center gap-1.5 p-2 border rounded-lg cursor-pointer">
+              <input type="radio" name="pay-method" value="card" onchange="togglePaymentFields()">
+              <span class="font-bold">💳 Debit/Credit</span>
+            </label>
+            <label class="flex items-center gap-1.5 p-2 border rounded-lg cursor-pointer">
+              <input type="radio" name="pay-method" value="cod" onchange="togglePaymentFields()">
+              <span class="font-bold">💵 Cash (COD)</span>
+            </label>
+          </div>
+
+          <!-- Bank Details Section -->
+          <div id="bank-fields" class="p-3 bg-stone-50 border rounded-xl space-y-2">
+            <span class="font-bold text-emerald-900 block text-xs border-b pb-1">Enter Customer Bank Account Details</span>
+            <div>
+              <label class="block text-[11px] font-semibold text-stone-600 mb-0.5">Select Bank *</label>
+              <select id="cust-bank" class="w-full p-1.5 border rounded-md text-xs bg-white font-semibold">
+                <option value="State Bank of India (SBI)">State Bank of India (SBI)</option>
+                <option value="Canara Bank">Canara Bank</option>
+                <option value="HDFC Bank">HDFC Bank</option>
+                <option value="ICICI Bank">ICICI Bank</option>
+                <option value="Indian Overseas Bank (IOB)">Indian Overseas Bank (IOB)</option>
+                <option value="Axis Bank">Axis Bank</option>
+                <option value="Bank of Baroda">Bank of Baroda</option>
+                <option value="Indian Bank">Indian Bank</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold text-stone-600 mb-0.5">Account Holder Name *</label>
+              <input type="text" id="cust-ac-holder" placeholder="e.g. Ramesh Kumar" class="w-full p-1.5 border rounded-md text-xs">
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[11px] font-semibold text-stone-600 mb-0.5">Bank Account Number *</label>
+                <input type="password" id="cust-ac-num" placeholder="9-18 digits" class="w-full p-1.5 border rounded-md text-xs font-mono">
+              </div>
+              <div>
+                <label class="block text-[11px] font-semibold text-stone-600 mb-0.5">IFSC Code *</label>
+                <input type="text" id="cust-ifsc" placeholder="e.g. SBIN0001234" class="w-full p-1.5 border rounded-md text-xs font-mono uppercase">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-xl bg-emerald-600 text-white font-bold text-sm hover:bg-emerald-700 transition-colors mt-2">
+          Verify Bank &amp; Complete Order
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="bg-stone-900 text-stone-400 text-xs py-8 px-4 mt-auto no-print">
+    <div class="max-w-7xl mx-auto text-center space-y-2">
+      <p class="font-bold text-white text-sm">Sri Maneeshwara Super Market</p>
+      <p>Serving Annur, Kumarankundru, Pogalur, and Kovilpalayam in Coimbatore District, Tamil Nadu</p>
+      <p class="text-[11px] text-stone-500">Standalone single-file edition. Cart and settings persist in your browser localStorage.</p>
+    </div>
+  </footer>
+
+  <!-- Single File Embedded Interactive Script -->
+  <script>
+    // Sample 20 representative products for standalone edition
+    const STANDALONE_PRODUCTS = [
+      { id: "sp1", name: "Aashirvaad Whole Wheat Atta 5 kg Pack", tamil: "ஆசிர்வாத் கோதுமை மாவு", brand: "Aashirvaad", price: 285, mrp: 335, weight: "5 kg" },
+      { id: "sp2", name: "Sri Lalitha Ponni Boiled Rice 5 kg Bag", tamil: "ஸ்ரீ லலிதா பொன்னி புழுங்கல் அரிசி", brand: "Sri Lalitha Ponni", price: 310, mrp: 340, weight: "5 kg" },
+      { id: "sp3", name: "India Gate Classic Basmati Rice 1 kg Pouch", tamil: "இந்தியா கேட் பாசுமதி அரிசி", brand: "India Gate", price: 185, mrp: 215, weight: "1 kg" },
+      { id: "sp4", name: "Gold Winner Sunflower Oil 1 Litre Pouch", tamil: "கோல்ட் வின்னர் சமையல் எண்ணெய்", brand: "Gold Winner", price: 142, mrp: 165, weight: "1 L" },
+      { id: "sp5", name: "Idhayam Gingelly Sesame Oil 500 ml Bottle", tamil: "இதயம் நல்லெண்ணெய்", brand: "Idhayam", price: 185, mrp: 210, weight: "500 ml" },
+      { id: "sp6", name: "Aavin Pure Cow Ghee 500 ml Jar", tamil: "ஆவின் பசு நெய்", brand: "Aavin", price: 355, mrp: 375, weight: "500 ml" },
+      { id: "sp7", name: "Aavin Full Cream Milk 500 ml Packet", tamil: "ஆவின் ஆரஞ்சு பால் பாக்கெட்", brand: "Aavin", price: 30, mrp: 30, weight: "500 ml" },
+      { id: "sp8", name: "Milky Mist Farm Fresh Curd 500 g Pouch", tamil: "மில்கி மிஸ்ட் தயிர்", brand: "Milky Mist", price: 42, mrp: 45, weight: "500 g" },
+      { id: "sp9", name: "Amul Pasteurized Butter 100 g Carton", tamil: "அமுல் வெண்ணெய்", brand: "Amul", price: 54, mrp: 58, weight: "100 g" },
+      { id: "sp10", name: "Sakthi Sambar Powder 200 g Pack", tamil: "சக்தி சாம்பார் தூள்", brand: "Sakthi", price: 62, mrp: 74, weight: "200 g" },
+      { id: "sp11", name: "Aachi Kulambu Chilli Powder 200 g Pack", tamil: "ஆச்சி குழம்பு மிளகாய்த்தூள்", brand: "Aachi", price: 58, mrp: 68, weight: "200 g" },
+      { id: "sp12", name: "Tata Salt Iodized 1 kg Pack", tamil: "டாடா உப்பு", brand: "Tata Salt", price: 25, mrp: 28, weight: "1 kg" },
+      { id: "sp13", name: "Parry's Pure Refined Sugar 1 kg Pack", tamil: "பாரி சர்க்கரை", brand: "Parry's", price: 47, mrp: 54, weight: "1 kg" },
+      { id: "sp14", name: "Tata Tea Premium 500 g Pouch", tamil: "டாடா டீ பிரீமியம்", brand: "Tata Tea", price: 239, mrp: 285, weight: "500 g" },
+      { id: "sp15", name: "BRU Instant Coffee 100 g Jar", tamil: "ப்ரூ இன்ஸ்டன்ட் காபி", brand: "Bru", price: 168, mrp: 195, weight: "100 g" },
+      { id: "sp16", name: "Britannia Good Day Cashew 200 g Pack", tamil: "குட் டே பிஸ்கட்", brand: "Britannia", price: 38, mrp: 45, weight: "200 g" },
+      { id: "sp17", name: "Surf Excel Easy Wash Detergent 1 kg Pack", tamil: "சர்ப் எக்செல் பவுடர்", brand: "Surf Excel", price: 139, mrp: 160, weight: "1 kg" },
+      { id: "sp18", name: "Vim Lemon Dishwash Gel 500 ml Squeezy", tamil: "விம் ஜெல்", brand: "Vim", price: 105, mrp: 130, weight: "500 ml" },
+      { id: "sp19", name: "Dettol Bath Soap 125 g Bar", tamil: "டெட்டால் சோப்", brand: "Dettol", price: 47, mrp: 55, weight: "125 g" },
+      { id: "sp20", name: "Sri Maneeshwara Cashew Nuts 250 g Pouch", tamil: "முந்திரிப் பருப்பு", brand: "Sri Maneeshwara", price: 220, mrp: 260, weight: "250 g" }
+    ];
+
+    let currentArea = localStorage.getItem("standalone_area") || "annur";
+    let cart = JSON.parse(localStorage.getItem("standalone_cart") || "[]");
+
+    function renderProducts() {
+      const grid = document.getElementById("products-grid");
+      document.getElementById("product-count").textContent = `${STANDALONE_PRODUCTS.length} essentials available`;
+      grid.innerHTML = STANDALONE_PRODUCTS.map(p => `
+        <div class="bg-white rounded-2xl border border-stone-200 p-4 flex flex-col justify-between hover:shadow-md transition-shadow">
+          <div>
+            <span class="text-[10px] font-bold text-emerald-800 uppercase tracking-wide">${p.brand}</span>
+            <h4 class="font-bold text-xs sm:text-sm text-stone-900 mt-0.5 line-clamp-2">${p.name}</h4>
+            <p class="text-xs text-stone-500 font-tamil mt-1">${p.tamil}</p>
+            <div class="mt-2 text-xs text-stone-600 font-semibold bg-stone-100 inline-block px-2 py-0.5 rounded-md">${p.weight}</div>
+          </div>
+          <div class="mt-4 pt-2 border-t flex items-center justify-between">
+            <div>
+              <span class="text-base font-extrabold text-stone-900">₹${p.price}</span>
+              <span class="text-xs text-stone-400 line-through ml-1">₹${p.mrp}</span>
+            </div>
+            <button onclick="addToCart('${p.id}')" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs">
+              + Add
+            </button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function addToCart(prodId) {
+      const p = STANDALONE_PRODUCTS.find(x => x.id === prodId);
+      if (!p) return;
+      const existing = cart.find(x => x.id === prodId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ ...p, qty: 1 });
+      }
+      saveCart();
+      updateCartUI();
+    }
+
+    function saveCart() {
+      localStorage.setItem("standalone_cart", JSON.stringify(cart));
+    }
+
+    function updateCartUI() {
+      const totalCount = cart.reduce((s, i) => s + i.qty, 0);
+      document.getElementById("cart-count").textContent = totalCount;
+
+      const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      const areaObj = STORE_CONFIG.deliveryAreas[currentArea] || STORE_CONFIG.deliveryAreas.annur;
+      const deliveryFee = (subtotal >= STORE_CONFIG.freeDeliveryThreshold || subtotal === 0) ? 0 : areaObj.deliveryCharge;
+      const grandTotal = subtotal + deliveryFee;
+
+      document.getElementById("cart-subtotal").textContent = `₹${subtotal}`;
+      document.getElementById("cart-delivery").textContent = deliveryFee === 0 ? "FREE" : `₹${deliveryFee}`;
+      document.getElementById("cart-grandtotal").textContent = `₹${grandTotal}`;
+
+      const giftRow = document.getElementById("cart-gift-row");
+      if (subtotal >= STORE_CONFIG.freeGiftThreshold) {
+        giftRow.classList.remove("hidden");
+      } else {
+        giftRow.classList.add("hidden");
+      }
+
+      const container = document.getElementById("cart-items");
+      if (cart.length === 0) {
+        container.innerHTML = '<div class="text-center py-8 text-stone-400 text-xs">Your cart is empty.</div>';
+      } else {
+        container.innerHTML = cart.map(item => `
+          <div class="flex justify-between items-center text-xs pb-2 border-b">
+            <div>
+              <p class="font-bold text-stone-900">${item.name}</p>
+              <p class="text-stone-500 font-tamil">${item.tamil}</p>
+              <span class="text-stone-600 font-semibold">₹${item.price} x ${item.qty}</span>
+            </div>
+            <div class="flex items-center gap-1">
+              <button onclick="changeQty('${item.id}', -1)" class="w-6 h-6 bg-stone-100 rounded text-stone-700 font-bold">-</button>
+              <span class="w-5 text-center font-bold">${item.qty}</span>
+              <button onclick="changeQty('${item.id}', 1)" class="w-6 h-6 bg-stone-100 rounded text-stone-700 font-bold">+</button>
+            </div>
+          </div>
+        `).join("");
+      }
+    }
+
+    function changeQty(id, delta) {
+      const idx = cart.findIndex(x => x.id === id);
+      if (idx >= 0) {
+        cart[idx].qty += delta;
+        if (cart[idx].qty <= 0) cart.splice(idx, 1);
+        saveCart();
+        updateCartUI();
+      }
+    }
+
+    function toggleCart() {
+      document.getElementById("cart-drawer").classList.toggle("hidden");
+    }
+
+    function openLocationModal() {
+      document.getElementById("location-modal").classList.remove("hidden");
+    }
+
+    function closeLocationModal() {
+      document.getElementById("location-modal").classList.add("hidden");
+    }
+
+    function setArea(areaKey) {
+      currentArea = areaKey;
+      localStorage.setItem("standalone_area", areaKey);
+      const a = STORE_CONFIG.deliveryAreas[areaKey];
+      document.getElementById("loc-display").textContent = `${a.name} (${a.estimatedTime})`;
+      closeLocationModal();
+      updateCartUI();
+    }
+
+    function openCheckout() {
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+      toggleCart();
+      document.getElementById("checkout-modal").classList.remove("hidden");
+    }
+
+    function closeCheckout() {
+      document.getElementById("checkout-modal").classList.add("hidden");
+    }
+
+    function togglePaymentFields() {
+      const selected = document.querySelector('input[name="pay-method"]:checked').value;
+      const bankFields = document.getElementById("bank-fields");
+      if (selected === "netbanking") {
+        bankFields.classList.remove("hidden");
+      } else {
+        bankFields.classList.add("hidden");
+      }
+    }
+
+    function placeOrder(e) {
+      e.preventDefault();
+      const name = document.getElementById("cust-name").value;
+      const phone = document.getElementById("cust-phone").value;
+      const area = document.getElementById("cust-area").value;
+      const address = document.getElementById("cust-address").value;
+      const payMethod = document.querySelector('input[name="pay-method"]:checked').value;
+      const bank = document.getElementById("cust-bank").value;
+      const acHolder = document.getElementById("cust-ac-holder").value;
+      const acNum = document.getElementById("cust-ac-num").value;
+      const ifsc = document.getElementById("cust-ifsc").value;
+
+      const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      const orderId = "SMS-" + Math.floor(100000 + Math.random() * 900000);
+      const txnRef = "TXN-" + Math.floor(10000000 + Math.random() * 90000000);
+
+      let bankText = "";
+      if (payMethod === "netbanking") {
+        const masked = acNum.length > 4 ? "••••••••" + acNum.slice(-4) : "••••••••1234";
+        bankText = `\\nBank: ${bank}\\nA/C Holder: ${acHolder || name}\\nDebited A/C: ${masked}\\nIFSC: ${ifsc || 'SBIN0001234'}\\nTxn ID: ${txnRef} (PAID)`;
+      } else {
+        bankText = `\\nPayment Method: ${payMethod.toUpperCase()}`;
+      }
+
+      const text = encodeURIComponent(
+        `Sri Maneeshwara Super Market Order #${orderId}\\n` +
+        `Customer: ${name} (${phone})\\n` +
+        `Area: ${area}\\n` +
+        `Address: ${address}\\n` +
+        bankText + `\\n` +
+        `Total: ₹${subtotal}\\n` +
+        `Items: ` + cart.map(i => `${i.name} x ${i.qty}`).join(", ")
+      );
+
+      closeCheckout();
+      cart = [];
+      saveCart();
+      updateCartUI();
+
+      if (confirm(`Order #${orderId} verified & placed!\\nPayment: ${payMethod === 'netbanking' ? 'Net Banking (' + bank + ')' : payMethod.toUpperCase()}\\n\\nSend order confirmation on WhatsApp to store?`)) {
+        window.open(`https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${text}`, "_blank");
+      }
+    }
+
+    // Initialize
+    window.addEventListener("DOMContentLoaded", () => {
+      setArea(currentArea);
+      renderProducts();
+      updateCartUI();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "Sri Maneeshwara Super Market",
+  "description": "Online grocery supermarket delivering fresh groceries, dairy, staples, and daily essentials across Annur, Kumarankundru, Pogalur, and Kovilpalayam in Coimbatore district.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
